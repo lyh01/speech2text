@@ -49,6 +49,7 @@ if __name__ == '__main__':
      soundFile = sys.argv[1]
   if (os.environ["S2T_USERNAME"] == '' or os.environ["S2T_PASSWORD"] == ''):
      sys.exit("Error: Be sure to set system variables S2T_USERNAME and S2T_PASSWORD to appropriate values")
+#    S2T_USERNAME and S2T_PASSWORD are Watson speech to text credentials
  
 #
 #  Log into S2T
