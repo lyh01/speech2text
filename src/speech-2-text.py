@@ -16,7 +16,8 @@ def processSoundFile( speech_to_text,soundFile ):
 
 def parseFromToUtterance( s2tout ):
 
-#  s2tout is a dictionary with these keys: speaker_labels, results, result_index, warnings   
+#
+#  s2tout is a dictionary with four keys: speaker_labels, results, result_index, warnings   
 #       each key is a list of dictionaries, primarily:
 #           speaker_labels: contains To and From timestamps of every spoken word by a speaker  
 #           results: contains the whole utterance by a speaker with To and From timestamps for each spoken word  
@@ -31,10 +32,36 @@ def parseFromToUtterance( s2tout ):
       print("%s,%s,\"%s\"" % (utteranceStart,utteranceEnd,utterance))
    return
 
+def parseFromToSpeakerLabels ( s2tout ):
+
+   wrk_speakerStart=''
+   wrk_speakerEnd=''
+   wrk_speakerID=''
+   speakerStart=''
+   speakerEnd=''
+   speakerID=''
+
+   for i in range(s2tout['speaker_labels'].__len__()):
+      if wrk_speakerID != s2tout['speaker_labels'][i]['speaker']:
+         if wrk_speakerID != '':
+           print("%s,%s,%s" % (wrk_speakerStart,wrk_speakerEnd,wrk_speakerID))
+           wrk_speakerID    = s2tout['speaker_labels'][i]['speaker']   
+           wrk_speakerStart = s2tout['speaker_labels'][i]['from']   
+           wrk_speakerEnd   = s2tout['speaker_labels'][i]['to']   
+         else:
+           wrk_speakerID    = s2tout['speaker_labels'][i]['speaker']   
+           wrk_speakerStart = s2tout['speaker_labels'][i]['from']   
+           wrk_speakerEnd   = s2tout['speaker_labels'][i]['to']   
+      else:
+         wrk_speakerEnd=s2tout['speaker_labels'][i]['to']   
+   return
 
 def main( speech_to_text, soundFile ):
     s2tout=processSoundFile(speech_to_text,soundFile)
+    print("Parsing results ...")
     parseFromToUtterance(s2tout)
+    print("Parsing speaker_labels ...")
+    parseFromToSpeakerLabels(s2tout)
 
 
 if __name__ == '__main__':
@@ -47,9 +74,6 @@ if __name__ == '__main__':
      sys.exit("Error: Please provide the name of the sound file as the only input parm")
   else:
      soundFile = sys.argv[1]
-
-# S2T_USERNAME and S2T_PASSWORD are Watson speech to text credentials
-
   if (os.environ["S2T_USERNAME"] == '' or os.environ["S2T_PASSWORD"] == ''):
      sys.exit("Error: Be sure to set system variables S2T_USERNAME and S2T_PASSWORD to appropriate values")
  
