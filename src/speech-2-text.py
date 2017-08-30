@@ -37,9 +37,6 @@ def parseFromToSpeakerLabels ( s2tout ):
    wrk_speakerStart=''
    wrk_speakerEnd=''
    wrk_speakerID=''
-   speakerStart=''
-   speakerEnd=''
-   speakerID=''
 
    for i in range(s2tout['speaker_labels'].__len__()):
       if wrk_speakerID != s2tout['speaker_labels'][i]['speaker']:
