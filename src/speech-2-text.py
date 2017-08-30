@@ -16,7 +16,7 @@ def processSoundFile( speech_to_text,soundFile ):
 
 def parseFromToUtterance( s2tout ):
 
-#  s2tout is a dictionary with these keys: speaker_labels, results, result_index, warnings   
+#  s2tout is a dictionary with four keys: speaker_labels, results, result_index, warnings   
 #       each key is a list of dictionaries, primarily:
 #           speaker_labels: contains To and From timestamps of every spoken word by a speaker  
 #           results: contains the whole utterance by a speaker with To and From timestamps for each spoken word  
